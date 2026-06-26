@@ -2,8 +2,9 @@
 import React from 'react'
 import "./HomeCategory.css";
 import { categories } from '@/data/productsData';
+import Image from 'next/image';
 const HomeCategory: React.FC = () => {
-  return (
+  return (      
     <>
     <div className="home_category_section">
       <div className="category_header">shop by category</div>
@@ -11,8 +12,20 @@ const HomeCategory: React.FC = () => {
       <div className="category_images">
         {categories.map((category, index) => {
             return (
-                <div key={index} className="cat_card" style={{backgroundImage: `url(${category.image})`}}>
-                    <div className= "cat_card">{category.name}</div>
+                <div key={index} className="cat_card" >
+                  <Image 
+                  src={category.image}
+                  alt={category.name}
+                  className="category_card_img"
+                  width={100}
+                  height={100}
+                  unoptimized
+                  style={{
+                    width: "100% !important",
+                    height: "100% !important",
+                  }}
+                  />
+                    <div className= "cat_name">{category.name}</div>
                 </div>
             )
         })}

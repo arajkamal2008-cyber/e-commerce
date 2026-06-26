@@ -18,15 +18,19 @@
         justify-content: space-between;
         gap:30px;
         flex-wrap: wrap;
-        background-size: cover;
-        background-position: center;
+       
 
         .cat_card {
-        width:273px;
-         height: 180;
+        width:253px;
+         height: 180px;
          position: relative;
 
-         & ::after {
+         .category_card_img {
+            object-fit: cover;
+            transition: transform 0.3s ease;
+         }
+
+         &::after {
             content: "" ;
             position:absolute;
             top:0px;
@@ -43,7 +47,7 @@
             transform: translateX(-50%);
             color: #fff;
             font-size: 18px;
-            font-weight: 500px ;
+            font-weight: 500 ;
             z-index: 999;
             text-wrap:nowrap;
          }
