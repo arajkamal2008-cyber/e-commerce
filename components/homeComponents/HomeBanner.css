@@ -1,0 +1,40 @@
+.main_banner{
+    display: flex;
+    padding: 100px 100px;
+    background-color: #453EC2;
+    width: 100%;
+    min-height: 50vh;
+    height: auto;
+    gap: 100px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+.banner_left{
+    flex: 1;
+    .sub_title{
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+    .title{
+        font-size: 55px;
+        font-weight: 900;
+        color: #fff;
+        max-width: 100%;
+        text-wrap:wrap;
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+    .description{
+        color: #dcdcdc;
+        font-size: 18px;
+    }
+}
+.banner_right{
+    flex: 1;
+    .hero_image{
+        border-radius: 15px;
+    }
+}
