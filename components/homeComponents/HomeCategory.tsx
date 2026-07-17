@@ -1,19 +1,20 @@
-"use client"
-import React from 'react'
+"use client";
+
+import React from "react";
 import "./HomeCategory.css";
-import { categories } from '@/data/productsData';
-import Image from 'next/image';
+import { categories } from "@/data/productsData";
+import Image from "next/image";
+
 const HomeCategory: React.FC = () => {
-  return (      
+  return (
     <>
-    <div className="home_category_section">
-      <div className="category_header">shop by category</div>
-      
-      <div className="category_images">
-        {categories.map((category, index) => {
+      <div className="home_category_section">
+        <div className="category_header">Shop by Category</div>
+        <div className="category_images">
+          {categories.map((category, index) => {
             return (
-                <div key={index} className="cat_card" >
-                  <Image 
+              <div key={index} className="cat_card">
+                <Image
                   src={category.image}
                   alt={category.name}
                   className="category_card_img"
@@ -24,15 +25,15 @@ const HomeCategory: React.FC = () => {
                     width: "100% !important",
                     height: "100% !important",
                   }}
-                  />
-                    <div className= "cat_name">{category.name}</div>
-                </div>
-            )
-        })}
+                />
+                <div className="cat_name">{category.name}</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      </div>
-      </>
-  )
-}
+    </>
+  );
+};
 
-export default HomeCategory
+export default HomeCategory;

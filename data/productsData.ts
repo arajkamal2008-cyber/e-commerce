@@ -1,8 +1,7 @@
-import { ICategory, IProduct } from "@/interfaces/product";
+import { ICategory, IProduct } from "@/interfaces/products";
 
- export const categories: ICategory[] = [
+export const categories: ICategory[] = [
     {
-      
       id: 1,
       name: "Electronics",
       image:
@@ -28,20 +27,19 @@ import { ICategory, IProduct } from "@/interfaces/product";
     },
   ];
 
-  export const products: IProduct[] =[
+  export const products: IProduct[] = [
     {
       id: 1,
-      title:"Premium Noise-Cancelling Headphones",
-      category:"Electronics", 
-      price: 189.99,
+      title: "premium noise-cancelling headphones",
+      category: "Electronics",
+      price:189.99,
       oldPrice: 249.99,
       rating: 4.8,
       reviews: 124,
       badge:"SALE",
-      image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80",
-      
+      image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80",
     },
-
     {
     id: 2,
     title: "Minimalist Leather Smart Watch",
@@ -53,9 +51,6 @@ import { ICategory, IProduct } from "@/interfaces/product";
     image:
       "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80",
   },
-  
-
-
   {
     id: 3,
     title: "Organic Cotton Casual Jacket",
@@ -77,12 +72,4 @@ import { ICategory, IProduct } from "@/interfaces/product";
     image:
       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80",
   },
-
-  
-  
-
-
-
-  
-    
-  ]
+]

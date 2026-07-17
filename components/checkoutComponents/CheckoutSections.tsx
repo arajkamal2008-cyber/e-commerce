@@ -1,30 +1,16 @@
-
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "./CheckoutSection.css";
-import { ICartItem } from "@/interfaces/cart";
 import { ICheckoutForm } from "@/interfaces/checkout";
-
-const cartData: ICartItem = {
-  id: 1,
-  title: "Premium Noise-Cancelling Headphones",
-  category: "Electronics",
-  price: 189.99,
-  oldPrice: 249.99,
-  rating: 4.8,
-  reviews: 124,
-  badge: "SALE",
-  image:
-    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80",
-  quantity: 2,
-};
+import { useCart } from "@/context/CartContext";
 
 const CheckoutSection = () => {
-  const [cartItems, setCartItems] = useState<ICartItem[]>([cartData]);
+  const { cartItems, checkout, isCheckingOut } = useCart();
   const navigate = useRouter();
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
@@ -33,7 +19,6 @@ const CheckoutSection = () => {
     formState: { errors },
   } = useForm<ICheckoutForm>();
 
-  // Order calculations
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
@@ -43,17 +28,18 @@ const CheckoutSection = () => {
   const tax = cartItems.length > 0 ? 15 : 0;
   const total = subtotal + shipping + tax;
 
-  const onSubmit: SubmitHandler<ICheckoutForm> = (data) => {
-    console.log("Customer Details:", data);
-    console.log("Cart Items:", cartItems);
+  const onSubmit: SubmitHandler<ICheckoutForm> = async (data) => {
+    setSubmitError(null);
+    const result = await checkout(data);
 
-    alert("Order placed successfully!");
-
-    localStorage.removeItem("cartItems");
-    setCartItems([]);
-
-    reset();
-    navigate.push("/");
+    if (result.success) {
+      reset();
+      navigate.push(`/order-confirmation/${result.orderId}`);
+    } else {
+      setSubmitError(
+        "Something went wrong placing your order. Please try again.",
+      );
+    }
   };
 
   return (
@@ -65,24 +51,19 @@ const CheckoutSection = () => {
         </div>
 
         <div className="order_layout">
-          {/* Customer Form */}
           <div className="order_form_card">
             <h2>Customer Information</h2>
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form_group">
                 <label htmlFor="name">Full Name</label>
-
                 <input
                   id="name"
                   type="text"
                   placeholder="Enter your name"
-                  {...register("name", {
-                    required: "Full name is required",
-                  })}
+                  {...register("name", { required: "Full name is required" })}
                   className={errors.name ? "input_error" : ""}
                 />
-
                 {errors.name && (
                   <span className="error">{errors.name.message}</span>
                 )}
@@ -90,7 +71,6 @@ const CheckoutSection = () => {
 
               <div className="form_group">
                 <label htmlFor="email">Email Address</label>
-
                 <input
                   id="email"
                   type="email"
@@ -104,7 +84,6 @@ const CheckoutSection = () => {
                   })}
                   className={errors.email ? "input_error" : ""}
                 />
-
                 {errors.email && (
                   <span className="error">{errors.email.message}</span>
                 )}
@@ -112,7 +91,6 @@ const CheckoutSection = () => {
 
               <div className="form_group">
                 <label htmlFor="mobile">Mobile Number</label>
-
                 <input
                   id="mobile"
                   type="tel"
@@ -126,7 +104,6 @@ const CheckoutSection = () => {
                   })}
                   className={errors.mobile ? "input_error" : ""}
                 />
-
                 {errors.mobile && (
                   <span className="error">{errors.mobile.message}</span>
                 )}
@@ -134,29 +111,30 @@ const CheckoutSection = () => {
 
               <div className="form_group">
                 <label htmlFor="address">Delivery Address</label>
-
                 <textarea
                   id="address"
                   rows={4}
                   placeholder="Enter complete address"
-                  {...register("address", {
-                    required: "Address is required",
-                  })}
+                  {...register("address", { required: "Address is required" })}
                   className={errors.address ? "input_error" : ""}
                 />
-
                 {errors.address && (
                   <span className="error">{errors.address.message}</span>
                 )}
               </div>
 
-              <button type="submit" className="confirm_btn">
-                Confirm Order
+              {submitError && <span className="error">{submitError}</span>}
+
+              <button
+                type="submit"
+                className="confirm_btn"
+                disabled={isCheckingOut}
+              >
+                {isCheckingOut ? "Processing..." : "Confirm Order"}
               </button>
             </form>
           </div>
 
-          {/* Order Summary */}
           <div className="order_summary_card">
             <h2>Order Summary</h2>
 
@@ -172,14 +150,12 @@ const CheckoutSection = () => {
                         alt={item.title}
                         className="summary_item_img"
                       />
-
                       <div className="summary_item_info">
                         <h4>{item.title}</h4>
                         <p>
                           ${item.price.toFixed(2)} × {item.quantity}
                         </p>
                       </div>
-
                       <span className="summary_item_total">
                         ${(item.price * item.quantity).toFixed(2)}
                       </span>
@@ -191,17 +167,14 @@ const CheckoutSection = () => {
                   <span>Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
-
                 <div className="summary_row">
                   <span>Shipping</span>
                   <span>${shipping.toFixed(2)}</span>
                 </div>
-
                 <div className="summary_row">
                   <span>Tax</span>
                   <span>${tax.toFixed(2)}</span>
                 </div>
-
                 <div className="summary_row total">
                   <span>Total</span>
                   <span>${total.toFixed(2)}</span>

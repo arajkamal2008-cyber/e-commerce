@@ -1,6 +1,4 @@
-
 .main_header {
-  
   padding: 20px 50px;
   display: flex;
   align-items: center;
@@ -9,8 +7,8 @@
   position: sticky;
   top: 0;
   width: 100%;
-    background-color: #e7eeec;
-    z-index: 99999999;
+  background-color: #e7eeec;
+  z-index: 99999999;
 }
 
 .main_header .header_left {
@@ -36,17 +34,45 @@
 }
 
 .main_header .header_left .header_title {
+  color: #101b18;
   font-size: 20px;
   font-weight: 600;
-  color: #101b18;
 }
 
-.main_header .header_left .header_right_icon {
+.main_header .header_right .header_right_icon {
   color: #101b18;
-  cursor: pointer;
+  font-size: 20px;
 }
 
 .main_header .header_right .header_right_icon:hover {
   color: #088463;
   cursor: pointer;
+}
+
+/* Add this to position the badge relative to the cart icon container */
+.cart_icon_wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the numerical counter badge */
+.cart_badge {
+  position: absolute;
+  top: -6px; /* Moves the badge slightly above the icon */
+  right: -8px; /* Moves the badge slightly to the right of the icon */
+  background-color: #ff4d4f; /* Vibrant notification red color */
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  pointer-events: none; /* Prevents the badge itself from blocking clicks */
 }

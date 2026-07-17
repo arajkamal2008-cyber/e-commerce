@@ -1,13 +1,13 @@
 export interface ICategory {
-    id :number;
-    name:string;
-    image:string;
+    id : number;
+    name : string;
+    image : string;
 }
 
 export interface IProduct {
-    id: number;
+    id : number;
     title: string;
-    category:string;
+    category: string;
     price: number;
     oldPrice?: number;
     rating: number;
